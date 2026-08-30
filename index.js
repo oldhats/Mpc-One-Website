@@ -1,0 +1,1 @@
+const pad-1-btn = document.getElementById("p1");

@@ -14,18 +14,20 @@ body {
 }
 
 #outer-window {
-    background-color: #0f1114;
-    width: 300px;
-    height: 105px;
+    /* background-color: #0f1114; */
+    background-color: white;
+    width: 350px;
+    height: 170px;
     position: absolute;
-    margin: 65px 0px 0px 30px;
+    margin: 40px 0px 0px 10px;
     /* border-radius: 10px; */
 }
 
 #inner-window {
-    background-color: #141517;
-    width: 285px;
-    height: 90px;
+    /* background-color: #141517; */
+    background-color: beige;
+    width: 335px;
+    height: 155px;
     /* border-radius: 5px; */
     position: absolute;
     margin: 8px 7px;
@@ -37,23 +39,20 @@ body {
 
 .pad-container {
     position: absolute;
-    margin: 250px 0 0 75px;   
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  gap:5px 5px;
-  width: 100px;
-  height: 10px;
-  /* grid-auto-flow: row;
-  justify-content: space-between;
-  align-content: space-between;
-  justify-items: stretch;
-  align-items: stretch; */
-  grid-template-areas:
-    ". . . ."
-    ". . . ."
-    ". . . ."
-    ". . . .";
+    margin: 230px 0 0 70px;
+    display: grid;
+    grid-template-columns: repeat(4, 55px);
+    grid-template-rows: repeat(4, 55px);
+    gap:10px 10px;
 }
 
+
+.pad-btn {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #161415;
+    border: none;
+    border-radius: 3px;
+    box-shadow: rgba(220, 38, 38, 0.8) 0px 0px 0px 2px, rgba(220, 38, 38, 0.65) 0px 0px 2px 2px, rgba(255, 255, 255, 0.08) 1px 0px 0px inset;
 }
