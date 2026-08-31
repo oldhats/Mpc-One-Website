@@ -2,6 +2,10 @@ body {
     color: white;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 #mpc-background {
     background-color: #000000;
     background: linear-gradient(191deg,rgba(0, 0, 0, 1) 0%, rgba(30, 33, 36, 1) 50%, rgba(30, 32, 33, 1) 100%); 
