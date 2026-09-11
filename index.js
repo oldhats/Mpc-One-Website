@@ -55,6 +55,21 @@ document.querySelectorAll(".pad-btn").forEach((btn) => {
   });
 });
 
-var canvas = document.getElementById("canvas");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// This is for the visulizer
+const canvas = document.getElementById("canvas");
+canvas.width = canvas.clientWidth;
+canvas.height = canvas.clientHeight;
+
+let canvasCtx = canvas.getContext("2d");
+
+let readings = new Uint8Array(analyser.frequencyBinCount);
+
+function draw() {
+  canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+  analyser.getByteFrequencyData(readings);
+  for (let i = 0; i < readings.length; i++) {
+    canvasCtx.fillRect(i, canvas.height - readings[i], 4, readings[i]);
+  }
+  requestAnimationFrame(draw);
+}
+draw();
