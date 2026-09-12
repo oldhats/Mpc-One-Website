@@ -64,12 +64,58 @@ let canvasCtx = canvas.getContext("2d");
 
 let readings = new Uint8Array(analyser.frequencyBinCount);
 
-function draw() {
+const gradient = canvasCtx.createLinearGradient(0, 0, 200, 0);
+
+function drawBars() {
+  canvasCtx.fillStyle = "red";
   canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
   analyser.getByteFrequencyData(readings);
   for (let i = 0; i < readings.length; i++) {
-    canvasCtx.fillRect(i, canvas.height - readings[i], 4, readings[i]);
+    // it was overflowing from the canvas so have to normalize the y and height values
+    canvasCtx.fillRect(
+      i,
+      canvas.height - (readings[i] / 255) * canvas.height,
+      2,
+      (readings[i] / 255) * canvas.height,
+    );
   }
-  requestAnimationFrame(draw);
 }
-draw();
+
+function dots() {
+  let x = 0;
+
+  // canvasCtx.fillStyle = "red";
+  analyser.fftSize = 128;
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+  const barWidth = canvas.width / bufferLength;
+
+  canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+  analyser.getByteFrequencyData(dataArray);
+
+  let barHeight;
+  for (let i = 0; i < bufferLength; i++) {
+    barHeight = (dataArray[i] / 255) * canvas.height;
+    const red = (i * barHeight) / 10;
+    const green = i * 4;
+    const blue = barHeight / 4 - 12;
+    canvasCtx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+    canvasCtx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+    x += barWidth;
+  }
+}
+
+const visualsFuncs = [drawBars, dots];
+let currentVisual = 0;
+
+function renderLoop() {
+  visualsFuncs[currentVisual]();
+  requestAnimationFrame(renderLoop);
+}
+renderLoop();
+
+const changeVisionBtn = document.querySelector(".change-vis-btn");
+changeVisionBtn.addEventListener("click", () => flashPad(changeVisionBtn));
+changeVisionBtn.addEventListener("click", function () {
+  currentVisual = (currentVisual + 1) % visualsFuncs.length;
+});
